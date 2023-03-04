@@ -1,0 +1,42 @@
+{
+  "name": "pubtrack-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon --exec babel-node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CheyenneHawkins/pubtrack-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CheyenneHawkins/pubtrack-server/issues"
+  },
+  "homepage": "https://github.com/CheyenneHawkins/pubtrack-server#readme",
+  "dependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "apollo-server": "^3.12.0",
+    "apollo-server-express": "^3.12.0",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "graphql-middleware": "^6.1.33",
+    "graphql-tools": "^8.3.18",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0",
+    "socket.io": "^4.6.1",
+    "spotify-web-api-node": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/node": "^7.20.7",
+    "nodemon": "^2.0.20"
+  }
+}
