@@ -21,11 +21,6 @@ const bodyParser = require('body-parser');
 app.use(cors())
 app.use(bodyParser.json())
 
-const typeDefs2 = gql`
-    type Query {
-        hello: String!
-    }`
-
 
 const server = new ApolloServer({
     typeDefs,
@@ -39,7 +34,7 @@ async function startApolloServer() {
     .then(() => {
         console.log('FOUND THE DB!');
         return app.listen({port: process.env.GQL_SERVER_PORT}, ()=>
-        console.log(`Server running on port ${process.env.GQL_SERVER_PORT}`));
+        console.log(`Server running on port ${process.env.GQL_SERVER_PORT}, ya tard!`));
     });
 
     app.listen(process.env.SERVER_PORT)
@@ -57,8 +52,16 @@ const io = require('socket.io')(3001, {
     }
 });
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
     console.log('Socket connected');
+    socket.on('get-document', documentId => {
+        const data = ''
+        socket.join(documentId)
+        socket.emit('load-document', data)
+        socket.on('send-changes', delta => {
+            socket.broadcast.to(documentId).emit('receive-changes', delta);
+        })
+    })
 })
 
 

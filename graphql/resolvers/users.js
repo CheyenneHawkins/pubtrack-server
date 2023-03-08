@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     Mutation: {
-        async registerUser(_, {registerInput: {email, password} }) {
+        async registerUser(_, {registerInput: {name, email, password} }) {
         
         // check if user already exists
             const oldUser = await User.findOne({ email });
@@ -17,6 +17,7 @@ module.exports = {
             const encryptedPassword = await bcrypt.hash(password, 10);
         // mongoose model to create user
             const newUser = new User({
+                name: name,
                 email: email.toLowerCase(),
                 password: encryptedPassword
             })
@@ -66,6 +67,7 @@ module.exports = {
         }
     },
     Query: {
-        user: (_, {ID}) => User.findById(ID)
+        user: (_, {ID}) => User.findById(ID),
+        user: (_, {email}) => User.findOne(email),
     }
 }
