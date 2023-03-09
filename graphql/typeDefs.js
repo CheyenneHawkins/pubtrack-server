@@ -9,6 +9,15 @@ type User {
     token: String
 }
 
+type Document {
+    _id: String
+    title: String
+    data: String
+    owner: String
+    createdAt: String
+    updatedAt: String
+}
+
 input RegisterInput {
     name: String
     email: String
@@ -36,13 +45,15 @@ input MessageInput {
 }
 
 type Query {
-    user(id: ID): User
-    userr(email: Email): User
+    # user(id: ID): User
+    user(email: String): User
+    document(id: ID): Document
 }
 
 
 type Mutation {
     registerUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
+    # findDocument(id: ID): Document
 }
 `

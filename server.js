@@ -15,8 +15,8 @@ const resolvers = require('./graphql/resolvers');
 const SpotifyWebApi = require('spotify-web-api-node')
 const bodyParser = require('body-parser');
 
+const User = require('./models/User');
 
-// main().catch(err => console.log(err));
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -45,6 +45,27 @@ startApolloServer()
 
 
 // WEBSOCKET STUFF
+
+// pulls in document schema
+const Document = require('./models/Document');
+
+const defaultValue = 'Brand new baby!'
+
+async function handleDoc(id) {
+    if (id == null) return
+
+    //look for existing document
+    const existingDoc = await Document.findById(id)
+
+    //if found, return it
+    if (existingDoc) return existingDoc
+
+    //if not found, create a new document
+    return await Document.create({ _id: id, data: defaultValue })
+
+}
+
+
 const io = require('socket.io')(3001, {
     cors: {
         origin: process.env.FRONTEND_URL,
@@ -54,17 +75,28 @@ const io = require('socket.io')(3001, {
 
 io.on('connection', socket => {
     console.log('Socket connected');
-    socket.on('get-document', documentId => {
-        const data = ''
+    socket.on('get-document', async documentId => {
+        console.log('documentId:',documentId);
+        const quillDoc = await handleDoc(documentId)
         socket.join(documentId)
-        socket.emit('load-document', data)
+        socket.emit('load-document', quillDoc.data)
+        // socket.emit('load-document', '')
+        console.log('quillDoc: ',quillDoc)
         socket.on('send-changes', delta => {
             socket.broadcast.to(documentId).emit('receive-changes', delta);
+        })
+        
+        socket.on('save-document', async data => {
+            console.log('data: ',data);
+            await Document.findByIdAndUpdate(documentId, { data })
+
         })
     })
 })
 
 
+
+/////////////
 
 // SPOTIFY STUFF
 const credentials = {
@@ -100,5 +132,8 @@ app.get('/insult', (req, res) => {
     res.send('Your hair is too blonde.')
 })
 
-
-
+app.get('/newuser', (req, res) => {
+    res.send(
+        'Hey'
+)
+})

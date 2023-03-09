@@ -23,7 +23,7 @@ module.exports = {
             })
         // create JWT token
             const token = jwt.sign(
-                { user_id: newUser._id, email }, 
+                { user_id: newUser._id, email, name }, 
                 process.env.JWT_SECRET,
                 {
                     expiresIn: 3600
@@ -47,10 +47,10 @@ module.exports = {
             if (user && (await bcrypt.compare(password, user.password))) {
             // create JWT token
             const token = jwt.sign(
-                { user_id: user._id, email }, 
+                { user_id: user._id, email, name: user.name }, 
                 process.env.JWT_SECRET,
                 {
-                    expiresIn: "2h"
+                    expiresIn: 3600
                 }
             )
             user.token = token;
