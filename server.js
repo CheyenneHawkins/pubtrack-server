@@ -32,6 +32,7 @@ const server = new ApolloServer({
 async function startApolloServer() {
     await server.start()
     server.applyMiddleware({ app })
+    // await mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
     await mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, dbName: 'PUBTRACK-DB'})
     .then(() => {
         console.log('FOUND THE DB!');
@@ -49,7 +50,6 @@ startApolloServer()
 // WEBSOCKET STUFF
 
 runSocket();
-
 
 
 /////////////

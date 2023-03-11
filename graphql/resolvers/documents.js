@@ -15,7 +15,18 @@ module.exports = {
           },
 
     Query: {
-        document: (_, {ID}) => Document.findById(ID),
+        getDocumentById: async (_, {id}) => {
+            const doc = await Document.findById({id: id})
+            return doc
+        },
+        getDocumentByTitle: async (_, {title}) => {
+            const doc = await Document.findOne({title: title})
+            return doc
+        },
+        getDocumentByOwner: async (_, {owner}) => {
+            const doc = await Document.findOne({owner: owner})
+            return doc
+        },
     }
 }
 }

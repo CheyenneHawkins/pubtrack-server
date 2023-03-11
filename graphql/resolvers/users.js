@@ -67,7 +67,13 @@ module.exports = {
         }
     },
     Query: {
-        user: (_, {ID}) => User.findById(ID),
-        user: (_, {email}) => User.findOne(email),
+        getUserByEmail: async (_, {email}) => {
+            const user = await User.findOne({email: email})
+            return user
+        },
+        getUserById: async (_, {id}) => {
+            const user = await User.findOne({_id: id})
+            return user
+        }
     }
 }

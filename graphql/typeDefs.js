@@ -45,15 +45,17 @@ input MessageInput {
 }
 
 type Query {
-    # user(id: ID): User
-    user(email: String): User
-    document(id: ID): Document
-}
+    getUserById(id: ID): User
+    getUserByEmail(email: String!): User
 
+    getDocumentById(id: String): Document
+    getDocumentByTitle(title: String): Document
+    getDocumentByOwner(owner: String): Document
+
+}
 
 type Mutation {
     registerUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
-    # findDocument(id: ID): Document
 }
 `

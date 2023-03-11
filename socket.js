@@ -59,8 +59,12 @@ const runSocket = () => {
                 console.log('Song Title: ',songTitle);
                 await Document.findByIdAndUpdate(documentId, { title: songTitle })
                 socket.broadcast.to(documentId).emit('receive-title', songTitle);
+            })
 
-
+            socket.on('search-docs', async id => {
+                console.log('Searching: ',id);
+                const result = await Document.findById(id)
+                console.log('Result: ',result.title, result.owner);
             })
         })
     })
