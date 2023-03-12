@@ -20,13 +20,13 @@ const runSocket = () => {
         if (id == null) return
     
         //look for existing document
-        const existingDoc = await Gadget.findById(id)
+        const existingDoc = await Document.findById(id)
     
         //if found, return it
         if (existingDoc) return existingDoc
     
         //if not found, create a new document
-        return await Gadget.create({ _id: id, data: defaultValue, owner: owner, title: songTitle })
+        return await Document.create({ _id: id, data: defaultValue, owner: owner, title: songTitle })
     
     }
     
@@ -54,12 +54,12 @@ const runSocket = () => {
             
             socket.on('save-document', async data => {
                 console.log('data: ',data);
-                await Gadget.findByIdAndUpdate(documentId, { data })
+                await Document.findByIdAndUpdate(documentId, { data })
             })
 
             socket.on('set-title', async songTitle => {
                 console.log('Song Title: ',songTitle);
-                await Gadget.findByIdAndUpdate(documentId, { title: songTitle })
+                await Document.findByIdAndUpdate(documentId, { title: songTitle })
                 socket.broadcast.to(documentId).emit('receive-title', songTitle);
             })
 

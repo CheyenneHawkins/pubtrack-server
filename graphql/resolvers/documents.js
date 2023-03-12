@@ -16,12 +16,18 @@ module.exports = {
 
     Query: {
         getDocumentById: async (_, {id}) => {
-            const doc = await Document.findById({id: id})
+            const doc = await Document.findOne({_id: id})
             return doc
         },
         getDocumentByTitle: async (_, {title}) => {
             const doc = await Document.findOne({title: title})
-            return doc
+            return {
+                _id: doc._id,
+                title: doc.title,
+                owner: doc.owner,
+                created_at: doc.created_at,
+                updated_at: doc.updated_at
+            }
         },
         getDocumentByOwner: async (_, {owner}) => {
             const doc = await Document.findOne({owner: owner})

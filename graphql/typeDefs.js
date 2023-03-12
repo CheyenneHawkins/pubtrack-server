@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-module.exports = gql`
+module.exports = gql` 
 
 type User {
     name: String
@@ -9,10 +9,26 @@ type User {
     token: String
 }
 
+type ops {
+    insert: String
+}
+
+type DocumentData {
+    ops: ops
+}
+
 type Document {
     _id: String
     title: String
-    data: String
+    data: DocumentData
+    owner: String
+    createdAt: String
+    updatedAt: String
+}
+type Gadget {
+    _id: String
+    title: String
+    data: DocumentData
     owner: String
     createdAt: String
     updatedAt: String
@@ -51,6 +67,8 @@ type Query {
     getDocumentById(id: String): Document
     getDocumentByTitle(title: String): Document
     getDocumentByOwner(owner: String): Document
+    
+    getGadgetByColor(title: String): Gadget
 
 }
 
