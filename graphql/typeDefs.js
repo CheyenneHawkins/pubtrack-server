@@ -1,6 +1,9 @@
 const { gql } = require('apollo-server-express');
 
+
 module.exports = gql`
+
+scalar Date
 
 type User {
     name: String
@@ -14,9 +17,18 @@ type Document {
     title: String
     data: String
     owner: String
-    createdAt: String
-    updatedAt: String
+    created_at: Date
+    updated_at: Date
 }
+
+type DocumentData {
+    ops: ops
+}
+
+type ops {
+    insert: String
+}
+
 
 input RegisterInput {
     name: String
@@ -44,18 +56,27 @@ input MessageInput {
     username: String
 }
 
+input DocumentInput {
+    content: String
+    db: String
+}
+
+
 type Query {
     getUserById(id: ID): User
     getUserByEmail(email: String!): User
 
-    getDocumentById(id: String): Document
+    getDocumentById(id: ID): Document
     getDocumentByTitle(title: String): Document
     getDocumentByOwner(owner: String): Document
+
 
 }
 
 type Mutation {
     registerUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
+    # createDocument(input: DocumentInput ): Document
+
 }
 `

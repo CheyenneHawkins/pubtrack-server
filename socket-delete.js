@@ -10,23 +10,21 @@ const runSocket = () => {
     });
 
     // pulls in document schema
-    // const Document = require('./models/Document');
-
-    const Document = require('./models/Document');
-
+    const Document = require('./models/Mocument');
+    
     const defaultValue = 'Brand new baby!'
     
     async function handleDoc(id, owner, songTitle) {
         if (id == null) return
     
         //look for existing document
-        const existingDoc = await Document.findById(id)
+        const existingMoc = await Mocument.findById(id)
     
         //if found, return it
-        if (existingDoc) return existingDoc
+        if (existingMoc) return existingMoc
     
         //if not found, create a new document
-        return await Document.create({ _id: id, data: defaultValue, owner: owner, title: songTitle })
+        return await Mocument.create({ _id: id, data: defaultValue, owner: owner, title: songTitle })
     
     }
     

@@ -17,6 +17,7 @@ module.exports = {
             const encryptedPassword = await bcrypt.hash(password, 10);
         // mongoose model to create user
             const newUser = new User({
+                _id: null,
                 name: name,
                 email: email.toLowerCase(),
                 password: encryptedPassword
