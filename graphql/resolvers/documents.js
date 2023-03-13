@@ -19,9 +19,9 @@ module.exports = {
             const doc = await Document.findOne({title: title})
             return doc
         },
-        getDocumentByOwner: async (_, {owner}) => {
-            const doc = await Document.findOne({owner: owner})
-            return doc
+        getDocumentsByOwner: async (_, {owner}) => {
+            const docs = await Document.find({owner: owner})
+            return docs
         },
     }
 }
