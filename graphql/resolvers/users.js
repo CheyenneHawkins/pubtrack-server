@@ -11,13 +11,13 @@ module.exports = {
             const oldUser = await User.findOne({ email });
         // throw error if user already exists
             if (oldUser) {
-                throw new ApolloError("You're already in the club!" + email, 'USER_ALREADY_EXISTS');
+                throw new ApolloError(`You're already in the club, ${email}!`, 'USER_ALREADY_EXISTS');
             }
         // encrypt password
             const encryptedPassword = await bcrypt.hash(password, 10);
         // mongoose model to create user
             const newUser = new User({
-                _id: null,
+                // _id: null,
                 name: name,
                 email: email.toLowerCase(),
                 password: encryptedPassword

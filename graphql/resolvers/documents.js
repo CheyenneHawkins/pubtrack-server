@@ -7,9 +7,13 @@ module.exports = {
 
     },
     Query: {
-        getDocumentByTitle: async (_, {title}) => {
+        getDocumentByTitle: async (_, {title, owner}) => {
             const doc = await Document.findOne({title: title})
+            if (doc.owner!== owner){
+                throw new ApolloError('You are not the owner of this document')
+            }
             return doc
+
         },
         getDocumentById: async (_, {id}) => {
             const doc = await Document.findById({_id: id})
@@ -19,8 +23,8 @@ module.exports = {
             const doc = await Document.findOne({title: title})
             return doc
         },
-        getDocumentsByOwner: async (_, {owner}) => {
-            const docs = await Document.find({owner: owner})
+        getDocumentsByOwner: async (_, {email}) => {
+            const docs = await Document.where({owner: {email: email}})
             return docs
         },
     }

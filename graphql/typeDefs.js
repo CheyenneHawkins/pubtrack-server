@@ -6,6 +6,7 @@ module.exports = gql`
 scalar Date
 
 type User {
+    _id: String
     name: String
     email: String
     password: String
@@ -16,7 +17,7 @@ type Document {
     _id: String
     title: String
     data: String
-    owner: String
+    owner: [Owner]
     created_at: Date
     updated_at: Date
 }
@@ -29,6 +30,16 @@ type ops {
     insert: String
 }
 
+type Owner {
+    user: User
+    added: Date
+}
+
+input OwnerInput {
+    _id: String
+    name: String
+    email: String
+}
 
 input RegisterInput {
     name: String
@@ -67,8 +78,8 @@ type Query {
     getUserByEmail(email: String!): User
 
     getDocumentById(id: ID): Document
-    getDocumentByTitle(title: String): Document
-    getDocumentsByOwner(owner: String): [Document]
+    getDocumentByTitle(title: String, owner: String): Document
+    getDocumentsByOwner(owner: OwnerInput): [Document]
 
 
 }
