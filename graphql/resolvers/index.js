@@ -1,5 +1,4 @@
 const usersResolvers = require('./users');
-// const documentsResolvers = require('./documents');
 const documentsResolvers = require('./documents');
 
 
@@ -11,5 +10,6 @@ module.exports = {
     },
     Mutation: {
         ...usersResolvers.Mutation,
+        ...documentsResolvers.Mutation,
     },
 };

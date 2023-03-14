@@ -4,7 +4,10 @@ const { ApolloError } = require('apollo-server-express');
 
 module.exports = {
     Mutation: {
-
+        deleteDocumentById: async (_, {id}) => {
+            const deleteDoc = await Document.findByIdAndDelete({_id: id})
+            return deleteDoc
+        },
     },
     Query: {
         getDocumentByTitle: async (_, {title, owner}) => {
@@ -14,6 +17,10 @@ module.exports = {
             }
             return doc
 
+        },
+        getDocuments: async () => {
+            const allDocuments = await Document.find()
+            return allDocuments
         },
         getDocumentById: async (_, {id}) => {
             const doc = await Document.findById({_id: id})
