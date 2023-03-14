@@ -31,7 +31,9 @@ type ops {
 }
 
 type Owner {
-    user: User
+    _id: String
+    name: String
+    email: String
     added: Date
 }
 
@@ -80,6 +82,8 @@ type Query {
     getDocumentById(id: ID): Document
     getDocumentByTitle(title: String, owner: String): Document
     getDocumentsByOwner(owner: OwnerInput): [Document]
+
+    getDocumentByEmail(email: String!): Document
 
 
 }

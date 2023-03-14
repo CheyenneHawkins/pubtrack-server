@@ -24,7 +24,7 @@ module.exports = {
             return doc
         },
         getDocumentsByOwner: async (_, {email}) => {
-            const docs = await Document.where({owner: {email: email}})
+            const docs = await Document.find({"owner.user.email": email})
             return docs
         },
     }
