@@ -83,7 +83,8 @@ type Query {
     getDocuments: [Document]
     getDocumentById(id: ID): Document
     getDocumentByTitle(title: String, owner: String): Document
-    getDocumentsByOwner(owner: OwnerInput): [Document]
+    getDocumentsByOwnerId(id: String): [Document]
+    getDocumentsByOwnerEmail(email: String): [Document]
 
     getDocumentByEmail(email: String!): Document
 

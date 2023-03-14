@@ -30,8 +30,12 @@ module.exports = {
             const doc = await Document.findOne({title: title})
             return doc
         },
-        getDocumentsByOwner: async (_, {email}) => {
-            const docs = await Document.find({"owner.user.email": email})
+        getDocumentsByOwnerId: async (_, {id} ) => {
+            const docs = await Document.find({ "owner._id": id})
+            return docs
+        },
+        getDocumentsByOwnerEmail: async (_, {email} ) => {
+            const docs = await Document.find({ "owner.email": email})
             return docs
         },
     }
