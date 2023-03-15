@@ -56,6 +56,7 @@ const runSocket = () => {
             socket.on('save-document', async data => {
                 console.log('data: ',data);
                 await Document.findByIdAndUpdate(documentId, { data })
+                socket.broadcast.to(documentId).emit('saved', documentId);
             })
 
             socket.on('set-title', async songTitle => {
