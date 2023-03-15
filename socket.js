@@ -26,7 +26,7 @@ const runSocket = () => {
         if (existingDoc) return existingDoc
     
         //if not found, create a new document
-        const ownerInput = {_id: owner.user_id, added: Date.now(), percentage: null}
+        const ownerInput = {_id: owner.user_id, name: owner.name, email: owner.email, added: Date.now(), percentage: null}
         return await Document.create({ _id: id, data: defaultValue, owner: [ownerInput], title: songTitle })
     
     }

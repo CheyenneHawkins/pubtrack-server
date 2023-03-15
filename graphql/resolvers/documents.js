@@ -1,4 +1,6 @@
 const Document = require('../../models/Document');
+const User = require('../../models/User');
+
 const { ApolloError } = require('apollo-server-express');
 
 
@@ -11,8 +13,9 @@ module.exports = {
         addOwnerToDocument: async (_, {docId, userId}) => {
             try {
                 const doc = await Document.findById({_id: docId})
-    
-                const newOwner = {_id: userId, added: Date.now(), percentage: null}
+                const user = await User.findOne({_id: userId})
+
+                const newOwner = {_id: userId, name: user.name, email: user.email, added: Date.now(), percentage: null}
                 doc.owner.push(newOwner)
                 await doc.updateOne({$set: {owner: doc.owner}})
 

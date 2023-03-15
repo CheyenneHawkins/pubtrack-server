@@ -33,6 +33,8 @@ type ops {
 
 type Owner {
     _id: String
+    name: String
+    email: String
     added: Date
     # user: User
     percentage: Int
