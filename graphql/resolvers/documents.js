@@ -8,6 +8,22 @@ module.exports = {
             const deleteDoc = await Document.findByIdAndDelete({_id: id})
             return deleteDoc
         },
+        addOwnerToDocument: async (_, {docId, userId}) => {
+            try {
+                const doc = await Document.findById({_id: docId})
+    
+                const newOwner = {_id: userId, added: Date.now(), percentage: null}
+                doc.owner.push(newOwner)
+                await doc.updateOne({$set: {owner: doc.owner}})
+
+                return doc
+
+            } catch (error) {
+                console.error(err);
+                throw new Error('Failed to update owner name');
+            }
+        }
+
     },
     Query: {
         getDocumentByTitle: async (_, {title, owner}) => {
@@ -24,6 +40,7 @@ module.exports = {
         },
         getDocumentById: async (_, {id}) => {
             const doc = await Document.findById({_id: id})
+            // const owners = doc.owner.user.map(owner => owner._id)
             return doc
         },
         getDocumentByTitle: async (_, {title}) => {
@@ -31,9 +48,14 @@ module.exports = {
             return doc
         },
         getDocumentsByOwnerId: async (_, {id} ) => {
-            const docs = await Document.find({ "owner._id": id})
+            const docs = await Document.find({ owner: { $elemMatch: { _id: id } } })
             return docs
         },
+        //for single owner schema
+        // getDocumentsByOwnerId: async (_, {id} ) => {
+        //     const docs = await Document.find({ "owner._id": id})
+        //     return docs
+        // },
         getDocumentsByOwnerEmail: async (_, {email} ) => {
             const docs = await Document.find({ "owner.email": email})
             return docs

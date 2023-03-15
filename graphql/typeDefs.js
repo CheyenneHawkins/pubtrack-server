@@ -17,7 +17,7 @@ type Document {
     _id: String
     title: String
     data: String
-    owner: Owner
+    owner: [Owner]
     created_at: Date
     updated_at: Date
 }
@@ -33,9 +33,9 @@ type ops {
 
 type Owner {
     _id: String
-    name: String
-    email: String
     added: Date
+    # user: User
+    percentage: Int
 }
 
 input OwnerInput {
@@ -83,6 +83,7 @@ type Query {
     getDocuments: [Document]
     getDocumentById(id: ID): Document
     getDocumentByTitle(title: String, owner: String): Document
+
     getDocumentsByOwnerId(id: String): [Document]
     getDocumentsByOwnerEmail(email: String): [Document]
 
@@ -95,6 +96,7 @@ type Mutation {
     registerUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
     deleteDocumentById(id: String): Document
+    addOwnerToDocument(docId: String, userId: String): Document
     # createDocument(input: DocumentInput ): Document
 
 }
